@@ -214,6 +214,20 @@
                 flex-direction: column;
             }
         }
+        .timeline-item {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.6s ease;
+}
+
+.timeline-item:nth-child(even) {
+    transform: translateX(50px);
+}
+
+.timeline-item.show {
+    opacity: 1;
+    transform: translateX(0);
+}
     </style>
 </head>
 <body>
@@ -243,7 +257,7 @@
             <div class="info-grid">
                 <div class="info-card">
                     <h4>📊 População</h4>
-                    <p><strong>Total:</strong> ~748 milhões (2024)</p>
+                    <p><strong>Total:</strong> <span class="contador" data-valor="748000000">0</span></p>
                     <p><strong>Densidade:</strong> 73 hab/km²</p>
                     <p><strong>Países:</strong> 50 países</p>
                 </div>
@@ -895,25 +909,85 @@
         const sections = document.querySelectorAll('.section');
         const navLinks = document.querySelectorAll('nav a');
 
+        let ticking = false;
+
         window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    atualizarMenu();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        function atualizarMenu() {
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (pageYOffset >= sectionTop - 150) {
-                    current = section.getAttribute('id');
+                if (scrollY >= sectionTop - 150) {
+                    current = section.id;
                 }
             });
 
             navLinks.forEach(link => {
                 link.style.background = '#f0f0f0';
                 link.style.color = '#667eea';
+
                 if (link.getAttribute('href') === `#${current}`) {
-                    link.style.background = '#667eea';
-                    link.style.color = 'white';
+                link.style.background = '#667eea';
+                link.style.color = 'white';
                 }
             });
+        }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+            }
         });
+        }, {
+        threshold: 0.2
+        });
+
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        function animarNumero(elemento, final, duracao = 2000) {
+            let inicio = 0;
+            const inicioTempo = performance.now();
+
+            function atualizarNumero(tempoAtual) {
+            const progresso = (tempoAtual - inicioTempo) / duracao;
+            const progressoSuave = Math.min(progresso, 1);
+
+            const valor = Math.floor(progressoSuave * final);
+            elemento.innerText = valor.toLocaleString();
+
+            if (progresso < 1) {
+                requestAnimationFrame(atualizarNumero);
+            }
+        }
+
+            requestAnimationFrame(atualizarNumero);
+        }
+
+        const numeros = document.querySelectorAll('.contador');
+
+        const observerNumeros = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const valor = Number(el.getAttribute('data-valor'));
+
+                animarNumero(el, valor);
+                observerNumeros.unobserve(el); // roda só uma vez
+            }
+        });
+    });
+
+        numeros.forEach(num => observerNumeros.observe(num));
     </script>
 </body>
 </html>
