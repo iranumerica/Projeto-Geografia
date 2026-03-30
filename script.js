@@ -61,21 +61,31 @@
             observer.observe(item);
         });
 
-        function animarNumero(elemento, final, duracao = 2000) {
-            let inicio = 0;
+        function animarNumero(elemento, final, duracao = 2000, casasDecimais = 0) {
             const inicioTempo = performance.now();
 
             function atualizarNumero(tempoAtual) {
-            const progresso = (tempoAtual - inicioTempo) / duracao;
-            const progressoSuave = Math.min(progresso, 1);
+                const progresso = (tempoAtual - inicioTempo) / duracao;
+                const progressoSuave = Math.min(progresso, 1);
 
-            const valor = Math.floor(progressoSuave * final);
-            elemento.innerText = valor.toLocaleString();
+                const valorAtual = progressoSuave * final;
+                elemento.innerText = valorAtual.toLocaleString('pt-BR', {
+                    minimumFractionDigits: casasDecimais,
+                    maximumFractionDigits: casasDecimais
+                });
 
-            if (progresso < 1) {
-                requestAnimationFrame(atualizarNumero);
-            }
-        }
+                if (progresso < 1) {
+                    requestAnimationFrame(atualizarNumero);
+                } else {
+                    // --- CÓDIGO DA MARCAÇÃO ---
+                    elemento.classList.add('finalizado'); // Ativa o efeito
+            
+                    setTimeout(() => {
+                        elemento.classList.remove('finalizado'); // Remove após 800ms
+                    }, 800);
+                    // ---------------------------
+                }
+            };
 
             requestAnimationFrame(atualizarNumero);
         }
@@ -87,8 +97,9 @@
                 if (entry.isIntersecting) {
                     const el = entry.target;
                     const valor = Number(el.getAttribute('data-valor'));
+                    const tempoDesejado = Number(el.getAttribute('data-duracao')) || 2000; // 2000 é o padrão caso esqueça o atributo
 
-                animarNumero(el, valor);
+                animarNumero(el, valor, tempoDesejado);
                 observerNumeros.unobserve(el); // roda só uma vez
             }
         });

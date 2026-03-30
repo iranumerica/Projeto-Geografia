@@ -221,3 +221,14 @@
             opacity: 1;
             transform: translateX(0);
         }
+        /* Estado normal do contador */
+        .contador {
+            transition: all 0.3s ease;
+        }
+
+        /* Efeito de marcação (ex: cor verde e um leve pulso) */
+        .contador.finalizado {
+            color: #27ae60; /* Verde */
+            transform: scale(1.1); /* Aumenta um pouco */
+            text-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
+        }
