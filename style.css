@@ -1,234 +1,469 @@
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* ── Reset & Base ───────────────────────────────────────────────── */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
+/* ── CSS Variables: paleta global e paletas por país ─────────────── */
+:root {
+    --c1: #667eea;
+    --c2: #764ba2;
+    --accent: #f093fb;
+    --bg-body-a: #667eea;
+    --bg-body-b: #764ba2;
+    --card-a: #667eea;
+    --card-b: #764ba2;
+    --border: #667eea;
+    --h2-color: #667eea;
+    --h3-color: #764ba2;
+    --timeline-dot: #667eea;
+    --nav-active-bg: #667eea;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+/* Alemanha: preto, vermelho e amarelo */
+body.pais-alemanha {
+    --bg-body-a: #1a1a1a;
+    --bg-body-b: #cc0000;
+    --card-a: #cc0000;
+    --card-b: #333333;
+    --border: #FFCE00;
+    --h2-color: #cc0000;
+    --h3-color: #b8860b;
+    --timeline-dot: #FFCE00;
+    --nav-active-bg: #cc0000;
+}
 
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
+/* França: azul, branco e vermelho */
+body.pais-franca {
+    --bg-body-a: #002395;
+    --bg-body-b: #ED2939;
+    --card-a: #002395;
+    --card-b: #b0001e;
+    --border: #ED2939;
+    --h2-color: #002395;
+    --h3-color: #b0001e;
+    --timeline-dot: #ED2939;
+    --nav-active-bg: #002395;
+}
 
-        header h1 {
-            color: #667eea;
-            font-size: 3em;
-            margin-bottom: 10px;
-        }
+/* Reino Unido: azul marinho e vermelho */
+body.pais-reino-unido {
+    --bg-body-a: #00247D;
+    --bg-body-b: #CF142B;
+    --card-a: #00247D;
+    --card-b: #9a0f20;
+    --border: #CF142B;
+    --h2-color: #00247D;
+    --h3-color: #9a0f20;
+    --timeline-dot: #CF142B;
+    --nav-active-bg: #00247D;
+}
 
-        header p {
-            color: #666;
-            font-size: 1.2em;
-        }
+/* Itália: verde, branco e vermelho */
+body.pais-italia {
+    --bg-body-a: #009246;
+    --bg-body-b: #CE2B37;
+    --card-a: #007a3a;
+    --card-b: #b02030;
+    --border: #009246;
+    --h2-color: #007a3a;
+    --h3-color: #b02030;
+    --timeline-dot: #009246;
+    --nav-active-bg: #009246;
+}
 
-        nav {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 20px;
-            z-index: 100;
-        }
+/* Espanha: vermelho e amarelo */
+body.pais-espanha {
+    --bg-body-a: #c60b1e;
+    --bg-body-b: #ffc400;
+    --card-a: #c60b1e;
+    --card-b: #a50919;
+    --border: #ffc400;
+    --h2-color: #c60b1e;
+    --h3-color: #a50919;
+    --timeline-dot: #ffc400;
+    --nav-active-bg: #c60b1e;
+}
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-        }
+/* Rússia: branco, azul e vermelho */
+body.pais-russia {
+    --bg-body-a: #003580;
+    --bg-body-b: #D52B1E;
+    --card-a: #003580;
+    --card-b: #b02218;
+    --border: #D52B1E;
+    --h2-color: #003580;
+    --h3-color: #b02218;
+    --timeline-dot: #D52B1E;
+    --nav-active-bg: #003580;
+}
 
-        nav a {
-            text-decoration: none;
-            color: #667eea;
-            padding: 10px 20px;
-            border-radius: 25px;
-            background: #f0f0f0;
-            transition: all 0.3s;
-            font-weight: 600;
-        }
+/* Portugal: verde e vermelho */
+body.pais-portugal {
+    --bg-body-a: #006600;
+    --bg-body-b: #FF0000;
+    --card-a: #005200;
+    --card-b: #cc0000;
+    --border: #006600;
+    --h2-color: #005200;
+    --h3-color: #cc0000;
+    --timeline-dot: #006600;
+    --nav-active-bg: #006600;
+}
 
-        nav a:hover {
-            background: #667eea;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
+/* ── Body & Background dinâmico ──────────────────────────────────── */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, var(--bg-body-a) 0%, var(--bg-body-b) 100%);
+    transition: background 1.2s ease;
+    min-height: 100vh;
+}
 
-        .section {
-            background: white;
-            padding: 40px;
-            margin-bottom: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
+/* Partículas/padrão decorativo no fundo */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
 
-        .section h2 {
-            color: #667eea;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #764ba2;
-            padding-bottom: 10px;
-        }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
 
-        .section h3 {
-            color: #764ba2;
-            font-size: 1.8em;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
+/* ── Header ──────────────────────────────────────────────────────── */
+header {
+    background: rgba(255, 255, 255, 0.97);
+    padding: 35px 30px;
+    border-radius: 18px;
+    margin-bottom: 30px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    border-top: 5px solid var(--bg-body-a);
+    transition: border-color 1.2s ease;
+}
 
-        .section h4 {
-            color: #667eea;
-            font-size: 1.3em;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
+header h1 {
+    color: var(--h2-color, #667eea);
+    font-size: 3em;
+    margin-bottom: 10px;
+    transition: color 1.2s ease;
+}
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
+header p {
+    color: #666;
+    font-size: 1.2em;
+}
 
-        .info-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
-            border-radius: 10px;
-            color: white;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
+/* ── Nav ─────────────────────────────────────────────────────────── */
+nav {
+    background: rgba(255, 255, 255, 0.97);
+    padding: 18px 20px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 20px;
+    z-index: 100;
+    border-bottom: 3px solid var(--bg-body-a);
+    transition: border-color 1.2s ease;
+}
 
-        .info-card h4 {
-            color: white;
-            margin-top: 0;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
+nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
 
-        .info-card p {
-            margin: 5px 0;
-            line-height: 1.5;
-        }
+nav a {
+    text-decoration: none;
+    color: var(--nav-active-bg, #667eea);
+    padding: 9px 18px;
+    border-radius: 25px;
+    background: #f0f0f0;
+    transition: background 0.3s, color 0.3s, transform 0.2s, box-shadow 0.3s;
+    font-weight: 600;
+    font-size: 0.9em;
+}
 
-        .country-card {
-            background: #f8f9fa;
-            padding: 30px;
-            margin: 20px 0;
-            border-radius: 10px;
-            border-left: 5px solid #667eea;
-        }
+nav a:hover,
+nav a.ativo {
+    background: var(--nav-active-bg, #667eea);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+}
 
-        .timeline {
-            position: relative;
-            padding-left: 30px;
-            margin: 20px 0;
-        }
+/* ── Sections ────────────────────────────────────────────────────── */
+.section {
+    background: rgba(255, 255, 255, 0.97);
+    padding: 40px;
+    margin-bottom: 30px;
+    border-radius: 18px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    border-left: 6px solid var(--border, #667eea);
+    transition: border-color 1.2s ease;
+}
 
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
-        }
+.section h2 {
+    color: var(--h2-color, #667eea);
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    border-bottom: 3px solid var(--h3-color, #764ba2);
+    padding-bottom: 10px;
+    transition: color 1.2s ease, border-color 1.2s ease;
+}
 
-        .timeline-item {
-            margin-bottom: 20px;
-            position: relative;
-        }
+.section h3 {
+    color: var(--h3-color, #764ba2);
+    font-size: 1.8em;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    transition: color 1.2s ease;
+}
 
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -36px;
-            top: 5px;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            background: #667eea;
-            border: 3px solid white;
-            box-shadow: 0 0 0 3px #667eea;
-        }
+.section h4 {
+    color: var(--h2-color, #667eea);
+    font-size: 1.3em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    transition: color 1.2s ease;
+}
 
-        .timeline-item strong {
-            color: #764ba2;
-        }
+/* ── Info Grid & Cards ───────────────────────────────────────────── */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+    margin: 20px 0;
+}
 
-        ul, ol {
-            margin-left: 20px;
-            margin-top: 10px;
-        }
+.info-card {
+    background: linear-gradient(135deg, var(--card-a, #667eea) 0%, var(--card-b, #764ba2) 100%);
+    padding: 22px;
+    border-radius: 14px;
+    color: white;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    transition: background 1.2s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
 
-        li {
-            margin: 8px 0;
-        }
+/* Brilho decorativo no canto superior */
+.info-card::after {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    pointer-events: none;
+}
 
-        footer {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 30px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
+.info-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.3);
+}
 
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2em;
-            }
+.info-card h4 {
+    color: white;
+    margin-top: 0;
+    font-size: 1.15em;
+    margin-bottom: 10px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
 
-            .section {
-                padding: 20px;
-            }
+.info-card p {
+    margin: 5px 0;
+    line-height: 1.5;
+    font-size: 0.95em;
+}
 
-            nav ul {
-                flex-direction: column;
-            }
-        }
-        .timeline-item {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: all 0.6s ease;
-        }
+/* ── Country Card ────────────────────────────────────────────────── */
+.country-card {
+    background: linear-gradient(135deg, rgba(var(--card-a-rgb, 102,126,234), 0.06) 0%, rgba(255,255,255,1) 60%);
+    padding: 30px;
+    margin: 20px 0;
+    border-radius: 14px;
+    border-left: 5px solid var(--border, #667eea);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+    transition: border-color 1.2s ease;
+}
 
-        .timeline-item:nth-child(even) {
-            transform: translateX(50px);
-        }
+/* ── Timeline ────────────────────────────────────────────────────── */
+.timeline {
+    position: relative;
+    padding-left: 30px;
+    margin: 20px 0;
+}
 
-        .timeline-item.show {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        /* Estado normal do contador */
-        .contador {
-            transition: all 0.3s ease;
-        }
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--card-a, #667eea) 0%, var(--card-b, #764ba2) 100%);
+    transition: background 1.2s ease;
+}
 
-        /* Efeito de marcação (ex: cor verde e um leve pulso) */
-        .contador.finalizado {
-            color: #27ae60; /* Verde */
-            transform: scale(1.1); /* Aumenta um pouco */
-            text-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
-        }
+.timeline-item {
+    margin-bottom: 20px;
+    position: relative;
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.timeline-item:nth-child(even) {
+    transform: translateX(50px);
+}
+
+.timeline-item.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -36px;
+    top: 5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--timeline-dot, #667eea);
+    border: 3px solid white;
+    box-shadow: 0 0 0 3px var(--timeline-dot, #667eea);
+    transition: background 1.2s ease, box-shadow 1.2s ease;
+}
+
+.timeline-item strong {
+    color: var(--h3-color, #764ba2);
+    transition: color 1.2s ease;
+}
+
+ul, ol {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+li {
+    margin: 8px 0;
+}
+
+/* ── Contadores ──────────────────────────────────────────────────── */
+.contador {
+    display: inline-block;
+    transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.contador.finalizado {
+    color: #27ae60;
+    transform: scale(1.1);
+    text-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
+}
+
+/* ── Badge do país ativo ─────────────────────────────────────────── */
+#badge-pais {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    background: rgba(255,255,255,0.95);
+    color: var(--nav-active-bg, #667eea);
+    font-weight: 700;
+    font-size: 0.85em;
+    padding: 8px 16px;
+    border-radius: 30px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    border: 2px solid var(--nav-active-bg, #667eea);
+    z-index: 300;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.4s ease, transform 0.4s ease,
+                color 1.2s ease, border-color 1.2s ease;
+    pointer-events: none;
+}
+
+#badge-pais.visivel {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ── Botão "Voltar ao topo" ──────────────────────────────────────── */
+#btn-topo {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, var(--bg-body-a, #667eea) 0%, var(--bg-body-b, #764ba2) 100%);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.4em;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease,
+                transform 0.2s ease, background 1.2s ease;
+    z-index: 200;
+}
+
+#btn-topo.visivel {
+    opacity: 1;
+    visibility: visible;
+}
+
+#btn-topo:hover {
+    transform: translateY(-4px) scale(1.08);
+}
+
+/* ── Footer ──────────────────────────────────────────────────────── */
+footer {
+    background: rgba(255, 255, 255, 0.97);
+    padding: 22px;
+    border-radius: 15px;
+    margin-top: 30px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    border-top: 4px solid var(--bg-body-a, #667eea);
+    transition: border-color 1.2s ease;
+    color: #555;
+}
+
+/* ── Responsividade ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    header h1 { font-size: 2em; }
+    .section { padding: 20px; }
+    nav ul { flex-direction: column; align-items: center; }
+    #badge-pais { top: 12px; right: 12px; font-size: 0.75em; }
+}
+
+/* ── Acessibilidade: respeita prefers-reduced-motion ────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .timeline-item { opacity: 1; transform: none; transition: none; }
+    .contador { transition: none; }
+    #btn-topo, body, .info-card, header, nav, .section,
+    .section h2, .section h3, .timeline-item strong,
+    .timeline-item::before, .timeline::before, #badge-pais {
+        transition: none;
+    }
+}
