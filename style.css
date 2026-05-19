@@ -305,59 +305,339 @@ nav a.ativo {
     transition: border-color 1.2s ease;
 }
 
-/* ── Timeline ────────────────────────────────────────────────────── */
+/* ── Timeline da Europa Geral (divs históricos) ──────────────────── */
 .timeline {
     position: relative;
-    padding-left: 30px;
-    margin: 20px 0;
+    padding-left: 52px;
+    margin: 28px 0;
 }
 
 .timeline::before {
     content: '';
     position: absolute;
-    left: 0;
+    left: 16px;
     top: 0;
     bottom: 0;
     width: 3px;
-    background: linear-gradient(180deg, var(--card-a, #667eea) 0%, var(--card-b, #764ba2) 100%);
-    transition: background 1.2s ease;
+    border-radius: 99px;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        var(--card-a, #667eea) 8%,
+        var(--card-b, #764ba2) 92%,
+        transparent 100%
+    );
+    box-shadow: 0 0 8px color-mix(in srgb, var(--card-a, #667eea) 40%, transparent);
+    transition: background 1.2s ease, box-shadow 1.2s ease;
 }
 
-.timeline-item {
-    margin-bottom: 20px;
+/* Todos os itens entram sempre pela esquerda — sem alternância */
+.timeline > .timeline-item {
+    margin-bottom: 18px;
     position: relative;
     opacity: 0;
-    transform: translateX(-50px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateX(-40px);
+    background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(248,249,255,0.95) 100%);
+    border-radius: 12px;
+    padding: 14px 18px 14px 16px;
+    border-left: 4px solid var(--timeline-dot, #667eea);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+    transition:
+        opacity      0.55s ease,
+        transform    0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 1.2s ease,
+        box-shadow   0.25s ease;
 }
 
-.timeline-item:nth-child(even) {
-    transform: translateX(50px);
-}
+.timeline > .timeline-item:nth-child(even) { transform: translateX(-40px); }
 
-.timeline-item.show {
+.timeline > .timeline-item.show {
     opacity: 1;
     transform: translateX(0);
 }
 
-.timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -36px;
-    top: 5px;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background: var(--timeline-dot, #667eea);
-    border: 3px solid white;
-    box-shadow: 0 0 0 3px var(--timeline-dot, #667eea);
-    transition: background 1.2s ease, box-shadow 1.2s ease;
+.timeline > .timeline-item:hover {
+    transform: translateX(4px);
+    box-shadow:
+        0 6px 20px rgba(0,0,0,0.12),
+        0 2px 6px rgba(0,0,0,0.06),
+        inset 0 0 0 1px color-mix(in srgb, var(--timeline-dot, #667eea) 20%, transparent);
 }
 
-.timeline-item strong {
-    color: var(--h3-color, #764ba2);
+.timeline > .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -44px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%,
+        color-mix(in srgb, var(--timeline-dot, #667eea) 60%, white) 0%,
+        var(--timeline-dot, #667eea) 100%);
+    border: 3px solid white;
+    box-shadow:
+        0 0 0 3px var(--timeline-dot, #667eea),
+        0 0 12px color-mix(in srgb, var(--timeline-dot, #667eea) 50%, transparent),
+        0 2px 4px rgba(0,0,0,0.2);
+    transition: background 1.2s ease, box-shadow 1.2s ease, transform 0.25s ease;
+    z-index: 2;
+}
+
+.timeline > .timeline-item:hover::before {
+    transform: translateY(-50%) scale(1.2);
+    box-shadow:
+        0 0 0 3px var(--timeline-dot, #667eea),
+        0 0 20px color-mix(in srgb, var(--timeline-dot, #667eea) 70%, transparent),
+        0 2px 4px rgba(0,0,0,0.2);
+}
+
+.timeline > .timeline-item::after {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--timeline-dot, #667eea), transparent);
+    transition: background 1.2s ease;
+}
+
+.timeline > .timeline-item:nth-child(1)  { transition-delay: 0s;    }
+.timeline > .timeline-item:nth-child(2)  { transition-delay: 0.07s; }
+.timeline > .timeline-item:nth-child(3)  { transition-delay: 0.14s; }
+.timeline > .timeline-item:nth-child(4)  { transition-delay: 0.21s; }
+.timeline > .timeline-item:nth-child(5)  { transition-delay: 0.28s; }
+.timeline > .timeline-item:nth-child(6)  { transition-delay: 0.35s; }
+.timeline > .timeline-item:nth-child(7)  { transition-delay: 0.42s; }
+.timeline > .timeline-item:nth-child(8)  { transition-delay: 0.49s; }
+.timeline > .timeline-item:nth-child(9)  { transition-delay: 0.56s; }
+.timeline > .timeline-item:nth-child(10) { transition-delay: 0.63s; }
+
+.timeline > .timeline-item strong {
+    color: var(--h2-color, #667eea);
+    font-size: 0.95em;
+    display: block;
+    margin-bottom: 4px;
     transition: color 1.2s ease;
 }
+
+/* ── Timeline de História dos países (ul.timeline-historia) ─────── */
+.timeline-historia {
+    list-style: none;
+    margin: 14px 0;
+    padding: 0 0 0 40px;
+    position: relative;
+}
+
+.timeline-historia::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    border-radius: 99px;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        var(--card-a, #667eea) 6%,
+        var(--card-b, #764ba2) 94%,
+        transparent 100%
+    );
+    transition: background 1.2s ease;
+}
+
+.item-historia {
+    position: relative;
+    margin-bottom: 12px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.97) 0%, rgba(250,251,255,0.94) 100%);
+    border-left: 3px solid var(--timeline-dot, #667eea);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    opacity: 0;
+    transform: translateX(-30px);
+    transition:
+        opacity      0.5s ease,
+        transform    0.5s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 1.2s ease,
+        box-shadow   0.2s ease;
+}
+
+/* Sem alternância — todos sempre pela esquerda */
+.item-historia:nth-child(even) { transform: translateX(-30px); }
+
+.item-historia.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.item-historia:hover {
+    transform: translateX(4px);
+    box-shadow:
+        0 4px 14px rgba(0,0,0,0.10),
+        inset 0 0 0 1px color-mix(in srgb, var(--timeline-dot, #667eea) 18%, transparent);
+}
+
+.item-historia::before {
+    content: '';
+    position: absolute;
+    left: -28px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--timeline-dot, #667eea);
+    border: 2px solid white;
+    box-shadow:
+        0 0 0 2px var(--timeline-dot, #667eea),
+        0 0 8px color-mix(in srgb, var(--timeline-dot, #667eea) 45%, transparent);
+    transition: background 1.2s ease, box-shadow 1.2s ease, transform 0.2s ease;
+    z-index: 2;
+}
+
+.item-historia:hover::before { transform: translateY(-50%) scale(1.25); }
+
+.item-historia strong {
+    color: var(--h2-color, #667eea);
+    font-size: 0.9em;
+    transition: color 1.2s ease;
+}
+
+.timeline-historia .item-historia:nth-child(1)  { transition-delay: 0s;    }
+.timeline-historia .item-historia:nth-child(2)  { transition-delay: 0.06s; }
+.timeline-historia .item-historia:nth-child(3)  { transition-delay: 0.12s; }
+.timeline-historia .item-historia:nth-child(4)  { transition-delay: 0.18s; }
+.timeline-historia .item-historia:nth-child(5)  { transition-delay: 0.24s; }
+.timeline-historia .item-historia:nth-child(6)  { transition-delay: 0.30s; }
+.timeline-historia .item-historia:nth-child(7)  { transition-delay: 0.36s; }
+.timeline-historia .item-historia:nth-child(8)  { transition-delay: 0.42s; }
+.timeline-historia .item-historia:nth-child(9)  { transition-delay: 0.48s; }
+.timeline-historia .item-historia:nth-child(10) { transition-delay: 0.54s; }
+.timeline-historia .item-historia:nth-child(11) { transition-delay: 0.60s; }
+.timeline-historia .item-historia:nth-child(12) { transition-delay: 0.66s; }
+
+/* ── li.timeline-item legado ─────────────────────────────────────── */
+li.timeline-item {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    margin: 10px 0;
+}
+li.timeline-item:nth-child(even) { transform: translateX(-20px); }
+li.timeline-item.show { opacity: 1; transform: translateX(0); }
+li.timeline-item::before, li.timeline-item::after { display: none; }
+li.timeline-item:hover { transform: none; box-shadow: none; }
+
+/* ── Listas de conteúdo temático (Religião, Cultura, Economia…) ── */
+.lista-conteudo {
+    list-style: none;
+    margin: 14px 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.item-conteudo {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--card-a, #667eea) 6%, white) 0%,
+        white 100%
+    );
+    border: 1px solid color-mix(in srgb, var(--border, #667eea) 18%, transparent);
+    position: relative;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition:
+        opacity      0.5s ease,
+        transform    0.5s ease,
+        background   0.25s ease,
+        border-color 1.2s ease,
+        box-shadow   0.2s ease;
+}
+
+/* Sem alternância */
+.item-conteudo:nth-child(even) { transform: translateX(-20px); }
+
+.item-conteudo.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.item-conteudo::before {
+    content: '';
+    display: block;
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 6px;
+    background: var(--timeline-dot, #667eea);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--timeline-dot, #667eea) 25%, transparent);
+    transition: background 1.2s ease, box-shadow 1.2s ease, transform 0.2s ease;
+}
+
+.item-conteudo:hover {
+    transform: translateX(5px);
+    background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--card-a, #667eea) 12%, white) 0%,
+        color-mix(in srgb, var(--card-b, #764ba2) 5%, white) 100%
+    );
+    border-color: color-mix(in srgb, var(--border, #667eea) 40%, transparent);
+    box-shadow: 0 3px 12px color-mix(in srgb, var(--card-a, #667eea) 15%, transparent);
+}
+
+.item-conteudo:hover::before {
+    transform: scale(1.4);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--timeline-dot, #667eea) 35%, transparent);
+}
+
+.item-conteudo strong {
+    color: var(--h2-color, #667eea);
+    font-size: 0.92em;
+    transition: color 1.2s ease;
+    white-space: nowrap;
+}
+
+.item-conteudo ul {
+    margin: 6px 0 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.item-conteudo ul li {
+    font-size: 0.88em;
+    color: #555;
+    padding: 2px 0 2px 12px;
+    border-left: 2px solid color-mix(in srgb, var(--border, #667eea) 30%, transparent);
+    transition: border-color 1.2s ease;
+    margin: 0;
+}
+
+.lista-conteudo .item-conteudo:nth-child(1)  { transition-delay: 0s;    }
+.lista-conteudo .item-conteudo:nth-child(2)  { transition-delay: 0.05s; }
+.lista-conteudo .item-conteudo:nth-child(3)  { transition-delay: 0.10s; }
+.lista-conteudo .item-conteudo:nth-child(4)  { transition-delay: 0.15s; }
+.lista-conteudo .item-conteudo:nth-child(5)  { transition-delay: 0.20s; }
+.lista-conteudo .item-conteudo:nth-child(6)  { transition-delay: 0.25s; }
+.lista-conteudo .item-conteudo:nth-child(7)  { transition-delay: 0.30s; }
+.lista-conteudo .item-conteudo:nth-child(8)  { transition-delay: 0.35s; }
+.lista-conteudo .item-conteudo:nth-child(9)  { transition-delay: 0.40s; }
+.lista-conteudo .item-conteudo:nth-child(10) { transition-delay: 0.45s; }
 
 ul, ol {
     margin-left: 20px;
@@ -369,15 +649,156 @@ li {
 }
 
 /* ── Contadores ──────────────────────────────────────────────────── */
-.contador {
-    display: inline-block;
-    transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+
+/* Wrapper gerado pelo JS ao redor de cada .contador —
+   position:relative permite posicionar barra e label sem quebrar
+   o fluxo inline do texto ao redor */
+.contador-wrapper {
+    position: relative;
+    display: inline;
 }
 
+/* O número em si */
+.contador {
+    display: inline-block;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+    transition:
+        color       0.4s ease,
+        transform   0.4s ease,
+        text-shadow 0.4s ease,
+        filter      0.4s ease;
+    position: relative;
+    z-index: 1;
+}
+
+/* Barra de progresso — posicionada absolutamente sob o número,
+   sem ocupar espaço no fluxo do texto */
+.contador-barra {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    min-width: 40px;
+    height: 2px;
+    border-radius: 99px;
+    background: rgba(0,0,0,0.10);
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.contador-barra-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--card-a, #667eea), var(--card-b, #764ba2));
+    transition: background 1.2s ease;
+    box-shadow: 0 0 6px var(--card-a, #667eea);
+}
+
+/* Rótulo de "concluído" — flutua acima, sem empurrar nada */
+.contador-label {
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    font-size: 0.55em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--h3-color, #764ba2);
+    background: rgba(255,255,255,0.92);
+    padding: 1px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-weight: 700;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease, color 1.2s ease;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    z-index: 20;
+}
+
+/* ── Estados da animação ── */
+
+/* Contando: leve pulso de escala rítmico */
+.contador.contando {
+    color: var(--h2-color, #667eea);
+    animation: contadorPulso 0.5s ease-in-out infinite alternate;
+    text-shadow:
+        0 0 12px color-mix(in srgb, var(--card-a, #667eea) 60%, transparent),
+        0 2px 4px rgba(0,0,0,0.1);
+}
+
+@keyframes contadorPulso {
+    from { transform: scale(1);    filter: brightness(1);   }
+    to   { transform: scale(1.04); filter: brightness(1.12); }
+}
+
+/* Quase lá (>80%): intensifica o brilho */
+.contador.quase {
+    animation: contadorQuase 0.3s ease-in-out infinite alternate;
+    text-shadow:
+        0 0 20px color-mix(in srgb, var(--card-a, #667eea) 80%, transparent),
+        0 0 8px  color-mix(in srgb, var(--card-b, #764ba2) 60%, transparent),
+        0 2px 4px rgba(0,0,0,0.15);
+}
+
+@keyframes contadorQuase {
+    from { transform: scale(1.04); filter: brightness(1.1);  }
+    to   { transform: scale(1.08); filter: brightness(1.25); }
+}
+
+/* Finalizado: explosão de escala + cor de conclusão */
 .contador.finalizado {
-    color: #27ae60;
-    transform: scale(1.1);
-    text-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
+    animation: contadorFim 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+    color: var(--h2-color, #667eea) !important;
+    text-shadow:
+        0 0 24px color-mix(in srgb, var(--card-a, #667eea) 90%, transparent),
+        0 0 48px color-mix(in srgb, var(--card-a, #667eea) 40%, transparent),
+        0 4px 8px rgba(0,0,0,0.2);
+}
+
+@keyframes contadorFim {
+    0%   { transform: scale(1.08); }
+    30%  { transform: scale(1.22) rotate(-1deg); }
+    55%  { transform: scale(0.97) rotate(0.5deg); }
+    75%  { transform: scale(1.12); }
+    100% { transform: scale(1.06); }
+}
+
+/* Label visível quando finalizado */
+.contador-wrapper.finalizado .contador-label {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Barra cheia quando finalizado */
+.contador-wrapper.finalizado .contador-barra-fill {
+    background: linear-gradient(90deg, var(--card-a, #667eea), var(--card-b, #764ba2));
+    box-shadow: 0 0 10px var(--card-a, #667eea);
+    animation: barraFinalBrilho 1.2s ease-in-out 2 alternate;
+}
+
+@keyframes barraFinalBrilho {
+    from { box-shadow: 0 0 6px  var(--card-a, #667eea); opacity: 1; }
+    to   { box-shadow: 0 0 18px var(--card-a, #667eea); opacity: 0.7; }
+}
+
+/* Partículas de explosão — geradas pelo JS como spans */
+.contador-particula {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10;
+    animation: particulaExplodir var(--dur, 0.7s) ease-out forwards;
+}
+
+@keyframes particulaExplodir {
+    0%   { transform: translate(0, 0) scale(1);   opacity: 1; }
+    100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
 }
 
 /* ── Badge do país ativo ─────────────────────────────────────────── */
@@ -459,11 +880,14 @@ footer {
 
 /* ── Acessibilidade: respeita prefers-reduced-motion ────────────── */
 @media (prefers-reduced-motion: reduce) {
-    .timeline-item { opacity: 1; transform: none; transition: none; }
+    .timeline > .timeline-item,
+    li.timeline-item,
+    .item-historia,
+    .item-conteudo { opacity: 1; transform: none; transition: none; }
     .contador { transition: none; }
     #btn-topo, body, .info-card, header, nav, .section,
-    .section h2, .section h3, .timeline-item strong,
-    .timeline-item::before, .timeline::before, #badge-pais {
+    .section h2, .section h3, .timeline > .timeline-item strong,
+    .timeline > .timeline-item::before, .timeline::before, #badge-pais {
         transition: none;
     }
 }
